@@ -11,7 +11,7 @@ const routes = [
     component: SearchMedicine,
   },
   {
-    path: "/searchMedicine/searchMedicineDetail",
+    path: "/searchMedicineDetail",
     name: "Search Medicine Detail",
     component: () =>
       import(
@@ -19,7 +19,7 @@ const routes = [
       ),
   },
   {
-    path: "/searchMedicine/searchMedicineDetail/medicinesResultCat",
+    path: "/medicinesResultCat",
     name: "Medicines Result Cat",
     component: () =>
       import(
@@ -27,7 +27,7 @@ const routes = [
       ),
   },
   {
-    path: "/searchMedicine/searchMedicineDetail/medicinesResultCat/medicinesResult",
+    path: "/medicinesResult",
     name: "Medicines Result",
     component: () =>
       import(
@@ -35,7 +35,7 @@ const routes = [
       ),
   },
   {
-    path: "/searchMedicine/searchMedicineDetail/medicinesResultCat/medicinesResult/medicinesDetail",
+    path: "/medicinesDetail",
     name: "Medicines Detail",
     component: () =>
       import(
