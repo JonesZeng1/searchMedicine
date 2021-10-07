@@ -15,34 +15,13 @@
         </div>
         
         <div class="medicines">
-            <article @click="selected_drug" class="medicine_card" >
-                <img src="">
-                <p id="medicine_name">Panadol</p>
-                <p>$price</p>
-            </article>
-
-            <article class="medicine_card">
-                <img src="">
-                <p id="medicine_name">Panadol</p>
-                <p>$price</p>
-            </article>
-
-            <article class="medicine_card">
-                <img src="">
-                <p id="medicine_name">Panadol</p>
-                <p>$price</p>
-            </article>
-
-            <article class="medicine_card">
-                <img src="">
-                <p id="medicine_name">Panadol</p>
-                <p>$price</p>
-            </article>
-
-            <article class="medicine_card">
-                <img src="">
-                <p id="medicine_name">Panadol</p>
-                <p>$price</p>
+            <article @click="selected_drug" class="medicine_card" v-for="result in medicinesResults" :key="result.medicinesName">
+                <img :src="result.imgUrl">
+                <div class="medicine">
+                    <p>{{result.medicineName}}</p>
+                    <p>{{result.price}}</p>
+                </div>
+                
             </article>
         </div>
 
@@ -104,8 +83,18 @@ export default {
   components: {
     MedicineTitle,
   },
+
   data() {
+      return {
+          medicinesResults:[],
+      };
   },
+
+  created: function () {
+        this.medicinesResults = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
+        console.log(this.medicinesResults);
+  },
+
   methods: {
     selected_drug() {
          this.$router.push({ path: "medicinesResult" });
@@ -114,7 +103,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 body {
     margin: 0;
@@ -190,24 +179,31 @@ body {
 }
 
 .medicines article {
-    width: 2em;
-    height: 2em;
+    width: 6em;
+    height: 4em;
     padding: 2em;
-    margin-left: 2em;
+    margin-left: 1em;
     margin-right: auto;
     border-radius: 10%;
     box-shadow: 5px 10px 18px #0000001A;
+    text-align: center;
 }
 
-#medicine_name {
-    font-size: 0.6em;
-    color: black;
-    font-weight: bold;
-    margin-bottom: 0;
+.medicines article img{
+    width: 100%;
+    height:70%;
+}
+
+.medicine {
+    margin-top: 0;
+    width: 100%;
+    text-overflow: hidden;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 .medicines p {
-    margin-top: 0;
+    margin-top: auto;
     font-size: 0.5em;
     color: #2D906C;
 }

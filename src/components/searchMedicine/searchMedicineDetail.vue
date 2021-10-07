@@ -3,19 +3,16 @@
      <MedicineTitle titleText="Search Medicines"></MedicineTitle>
     
         <section class="search_medicines">
-            <div class="search_box">
-                <i class="fas fa-search"></i>
-                <input type="text" name="search_medicines">
-            </div>
-    
+
+                <van-search v-model="inputValue" placeholder="Please input the keyword" />
             
             <div class="medicines_price_range">
                 <h2>Prices</h2>
                     <form>
-                        <van-slider class="slider" v-model="value" range @change="onChange" />
+                        <van-slider class="slider" v-model="value" :min="5" :max="100" range @change="onChange" />
 
-                        <div class="search_medicine_button">
-                            <router-link to="/medicinesResultCat"><button id="search_medicine_button" type="submit">Search</button></router-link>
+                        <div class="search_medicine_button">                            
+                            <div @click="checksubmit" id="search_medicine_button">Search</div>
                         </div>
                     </form>
             </div>
@@ -27,6 +24,8 @@
 <script>
 import { Toast} from 'vant';
 import MedicineTitle from "@/components/MedicineTitle";
+import axios from "axios";
+import qs from "qs";
 
 export default {
   name: "searchMedicineDetail",
@@ -35,17 +34,39 @@ export default {
   },
   data() {
     return {
-      // 双滑块模式时，值必须是数组
-      value: [10, 50],
+      value: [5,100],
+      inputValue:'',
     };
   },
   methods: {
-    selected_Price() {
-         this.$router.push({ path: "/medicinesResultCat" });
-    },
     onChange(value) {
       Toast('Current value range：' + value);
-    }, 
+    },
+    checksubmit() {
+        if (!this.$data.inputValue) {
+        Toast("Please input medicine keyword");
+      } else {
+        // Store all the values globally
+        this.$store.state.keyWord = this.$data.inputValue;
+        this.$store.state.highPrice = this.$data.value[1];
+        this.$store.state.lowPrice = this.$data.value[0];
+        this.submitMedicineDetail();
+      }
+    },
+    submitMedicineDetail() {
+
+        let medicineResult = this.$store.getters.getMedicineInfo;
+
+        axios({
+        method: "post",
+        url: "http://deco.logfox.xyz/servlet_project/searchMedicineServlet",
+
+        data: qs.stringify(medicineResult),
+      }).then((e) => {
+          this.$store.state.medicinesRespones = e;
+          this.$router.push({ path: "/medicinesResultCat" });
+      });
+    },
   },
 };
 </script>
@@ -107,12 +128,6 @@ body {
     width: 100%;
 }
 
-/* .medicines_price_range form {
-    width: 100%;
-    height: 10em;
-    text-align: left;
-} */
-
 .search_medicine_button {
   padding-top: 5em;
   display: flex;
@@ -124,7 +139,7 @@ body {
 #search_medicine_button {
   border: none;
   border-radius: 15px;
-  width: 85vw;
+  width: 75vw;
   padding: 1.2em;
   color: white;
   font-size: 1em;

@@ -4,8 +4,27 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {},
+  state: {
+    keyWord: "",
+    highPrice: "",
+    lowPrice: "",
+    medicinesRespones: "",
+  },
   mutations: {},
   actions: {},
   modules: {},
+  getters: {
+    getMedicineInfo: (state) => {
+      return {
+        keyWord: state.keyWord,
+        highPrice: state.highPrice,
+        lowPrice: state.lowPrice,
+      };
+    },
+    getMedicinesRespones: (state) => {
+      return {
+        medicinesRespones: state.medicinesRespones,
+      };
+    },
+  },
 });
