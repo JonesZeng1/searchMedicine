@@ -9,6 +9,8 @@ export default new Vuex.Store({
     highPrice: "",
     lowPrice: "",
     medicinesRespones: "",
+    selectedMedicine: [],
+    cart:[],
   },
   mutations: {},
   actions: {},

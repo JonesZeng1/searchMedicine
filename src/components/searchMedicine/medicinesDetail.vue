@@ -4,15 +4,18 @@
             <h2>Drugs detail</h2>
         </div>
         <div class="drugs_detail_img">
-            <img src="img/panadol.jpeg">
+            <!-- <img 
+            src= "../assets/logo.jpg"
+            alt="Image of the medicine."
+            > -->
         </div>
         <article class="drugs_shopping_detail">
             <div class="add_to_cart">
-                <button>Add to cart</button>
+                <!-- <button>Add to cart</button> -->
             </div>
             <div class="drugs_descriptions">
-                <p id="drugs_name">Panadol</p>
-                <p id="drugs_price">$18.6</p>
+                <p id="drugs_name">{{ medicinesDetail.medicineName }}</p>
+                <p id="drugs_price">$Price {{ medicinesDetail.price }}</p>
             </div>
             <div id="app" class="drug_number">
                 <van-stepper v-model="value" min="0" max="5" />
@@ -30,13 +33,13 @@
             </div>
             <div>
                 <h3>Description</h3>
-                <p>It is a commonly used antipyretic and analgesic medicine, often used for fever, headache and other minor pains. It is the main ingredient of many cold medicines and painkillers. It is quite safe to take acetaminophen according to the standard dose, but due to its wide range of effects, deliberate or accidental overdose is also common.</p>
+                <p>{{ medicinesDetail.medicineDescription }}</p>
             </div>
 
             <!-- <form action=""> -->
-                <button @click="showPopup" type="submit" name="buy_drug">Buy</button>
+                <button @click="addToCart" type="submit" name="buy_drug">Add to Cart</button>
             <!-- </form> -->
-            <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '20em' }">
+            <!-- <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '20em' }">
                 <div class="popup">
                     <div class="confirm_part_1">
                         <div class="confirm_drugs">
@@ -58,25 +61,34 @@
                         </div>
                     </div>
                 </div>
-            </van-popup>
+            </van-popup> -->
         </article>
     </section>
 </template>
 
-<script>
+<script scoped>
 
 export default {
   name: "medicinesDetail",
   data() {
     return {
         value: "",
-        show: false,
+        medicinesDetail: {},
     };
   },
+  created() {
+    this.medicinesDetail = this.$store.state.selectedMedicine.find((item) => {
+      return item.medicineId === this.$route.query.medicineId;
+    });
+    
+  },
   methods: {
-        showPopup() {
-            this.show = true;
-    },
+      addToCart() {
+          this.$store.state.cart[this.$route.query.medicineId] = this.value;
+          this.value = "",
+          console.log(this.medicinesDetail)
+          this.$router.go(-1);
+      }
   },
 }
 </script>

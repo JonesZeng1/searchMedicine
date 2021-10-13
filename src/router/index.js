@@ -26,17 +26,17 @@ const routes = [
         /* webpackChunkName: "medicinesResultCat" */ "../components/searchMedicine/medicinesResultCat"
       ),
   },
-  {
-    path: "/medicinesResult",
-    name: "Medicines Result",
-    component: () =>
-      import(
-        /* webpackChunkName: "medicnesResult" */ "../components/searchMedicine/medicinesResult"
-      ),
-  },
+  // {
+  //   path: "/medicinesResult",
+  //   name: "Medicines Result",
+  //   component: () =>
+  //     import(
+  //       /* webpackChunkName: "medicnesResult" */ "../components/searchMedicine/medicinesResult"
+  //     ),
+  // },
   {
     path: "/medicinesDetail",
-    name: "Medicines Detail",
+    name: "medicinesDetail",
     component: () =>
       import(
         /* webpackChunkName: "medicinesDetail" */ "../components/searchMedicine/medicinesDetail"

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive exclude="medicinesDetail">
       <router-view class="router-view-class" v-transition />
     </keep-alive>
   </div>

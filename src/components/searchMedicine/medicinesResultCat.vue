@@ -11,17 +11,25 @@
 
         <div class="symtoms_name">
             <h3>Cold</h3>
-            <a href="">More</a>
+            <van-icon class="cart" name="cart-o" color="#1989fa" size="35" badge="" />
         </div>
         
         <div class="medicines">
-            <article @click="selected_drug" class="medicine_card" v-for="result in medicinesResults" :key="result.medicinesName">
+            <article @click="selectedMedicine" class="medicine_card" v-for="(result, index) in medicinesResults" :key="index">
+                <router-link
+                :to="{
+                    name: 'medicinesDetail',
+                    query: {
+                    medicineId: result.medicineId,
+                    },
+                }"
+                >
                 <img :src="result.imgUrl">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
                     <p>{{result.price}}</p>
                 </div>
-                
+                </router-link>
             </article>
         </div>
 
@@ -75,7 +83,7 @@
   </div>
 </template>
 
-<script>
+<script scoped>
 import MedicineTitle from "@/components/MedicineTitle";
 
 export default {
@@ -92,13 +100,12 @@ export default {
 
   created: function () {
         this.medicinesResults = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
-        console.log(this.medicinesResults);
   },
 
   methods: {
-    selected_drug() {
-         this.$router.push({ path: "medicinesResult" });
-    },
+      selectedMedicine() {
+        this.$store.state.selectedMedicine = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
+      }
   },
 }
 </script>
@@ -161,9 +168,10 @@ body {
     width: 80%;
 }
 
-.symtoms_name a {
+.symtoms_name .cart {
     margin: auto;
     width: 20%;
+
 }
 
 .medicines {
