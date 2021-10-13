@@ -20,7 +20,7 @@ const routes = [
   },
   {
     path: "/medicinesResultCat",
-    name: "Medicines Result Cat",
+    name: "medicinesResultCat",
     component: () =>
       import(
         /* webpackChunkName: "medicinesResultCat" */ "../components/searchMedicine/medicinesResultCat"

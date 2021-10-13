@@ -11,7 +11,29 @@
 
         <div class="symtoms_name">
             <h3>Cold</h3>
-            <van-icon class="cart" name="cart-o" color="#1989fa" size="35" badge="" />
+            <van-icon @click="showPopup" class="cart" name="cart-o" color="#1989fa" size="35" :badge= "cartNumber.length" />
+                <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '80%' }">
+                    <van-swipe-cell v-for="(result, index) in cartNumber" :key="index">
+                        <van-card 
+                            :num="result.selectedNumber"
+                            :price="result.price"
+                            :desc="result.medicineDescription"
+                            :title="result.medicineName"
+                            class="goods-card"
+                            thumb="https://img01.yzcdn.cn/vant/cat.jpeg"
+                        />
+                        <template #right>
+                            <van-button square text="Delete" type="danger" class="delete-button" @click="deleteItem(index)" />
+                        </template>
+                    </van-swipe-cell>
+
+                    <div class="confirm-buttom">
+                        <div class="confirm">
+                        Confirm
+                        </div>
+                    </div>
+
+                </van-popup>
         </div>
         
         <div class="medicines">
@@ -95,17 +117,28 @@ export default {
   data() {
       return {
           medicinesResults:[],
+          cartNumber: [],
+          show: false,
       };
   },
 
   created: function () {
         this.medicinesResults = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
+        this.cartNumber = this.$store.state.cart;
   },
 
   methods: {
       selectedMedicine() {
         this.$store.state.selectedMedicine = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
-      }
+      },
+
+      showPopup() {
+        this.show = true;
+        console.log(this.cartNumber)
+      },
+      deleteItem(index) {
+        this.$delete(this.cartNumber, index);
+      },
   },
 }
 </script>
@@ -257,5 +290,42 @@ body {
     color: #bebcbc;
     margin-left: 2em;
 
+}
+
+/* popup windows */
+
+.goods-card {
+    margin: 0;
+    background-color: white;
+  }
+
+  .delete-button {
+    height: 100%;
+  }
+
+.confirm-buttom {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.confirm {
+    border: none;
+    border-radius: 15px;
+    width: 85vw;
+    padding: 1.2em;
+    color: white;
+    font-size: 1em;
+    background-color: #396cf0;
+    text-decoration: none;
+    text-align: center;
+}
+
+.confirm p {
+    color: #898A8F;
+    font-size: 15px;
+    margin-bottom: 10px;
 }
 </style>

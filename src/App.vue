@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive exclude="medicinesDetail">
+    <keep-alive :exclude="['medicinesDetail', 'medicinesResultCat']">
       <router-view class="router-view-class" v-transition />
     </keep-alive>
   </div>

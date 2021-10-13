@@ -39,29 +39,6 @@
             <!-- <form action=""> -->
                 <button @click="addToCart" type="submit" name="buy_drug">Add to Cart</button>
             <!-- </form> -->
-            <!-- <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '20em' }">
-                <div class="popup">
-                    <div class="confirm_part_1">
-                        <div class="confirm_drugs">
-                            <img src="img/panadol.jpeg">
-
-                        </div>
-                        <div class="confirm_drugs_number">
-                            <p>*1</p>
-                        </div>
-                    </div>
-                    <div class="confirm_part_2">
-                        <div class="confirm_drugs_description">
-                            <p>Panadol</p>
-                            <p>$18.6</p>
-                            <p>Non-prescription</p>
-                        </div>
-                        <div class="confirm_button">
-                            <button>Confirm</button>
-                        </div>
-                    </div>
-                </div>
-            </van-popup> -->
         </article>
     </section>
 </template>
@@ -84,9 +61,15 @@ export default {
   },
   methods: {
       addToCart() {
-          this.$store.state.cart[this.$route.query.medicineId] = this.value;
-          this.value = "",
-          console.log(this.medicinesDetail)
+          if(this.value != 0) { 
+            var temp = this.medicinesDetail;
+            (temp['selectedNumber'] = this.value);
+
+            this.$store.state.cart.push(temp);
+          } else {
+            this.value = "";
+          }
+          this.value = "";
           this.$router.go(-1);
       }
   },
@@ -176,21 +159,5 @@ body {
     color: white;
     border: none;
 }
-
-/* popup windows */
-
-.confirm_drugs, .confirm_drugs_number{
-    width: 50%;
-}
-
-.confirm_part_1, .confirm_part_2 {
-    display: flex;
-    height: 10em;
-}
-
-.confirm_drugs_description, .confirm_button {
-    width: 50%;
-}
-
 
 </style>
