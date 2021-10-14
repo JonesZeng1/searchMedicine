@@ -15,12 +15,12 @@
                 <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '80%' }">
                     <van-swipe-cell v-for="(result, index) in cartNumber" :key="index">
                         <van-card 
-                            :num="result.selectedNumber"
+                            :num="result.quantity"
                             :price="result.price"
                             :desc="result.medicineDescription"
                             :title="result.medicineName"
                             class="goods-card"
-                            thumb="https://img01.yzcdn.cn/vant/cat.jpeg"
+                            thumb="@/assets/nurifenForChild.jpg"
                         />
                         <template #right>
                             <van-button square text="Delete" type="danger" class="delete-button" @click="deleteItem(index)" />
@@ -28,7 +28,7 @@
                     </van-swipe-cell>
 
                     <div class="confirm-buttom">
-                        <div class="confirm">
+                        <div @click="submitMedicineOrder" class="confirm">
                         Confirm
                         </div>
                     </div>
@@ -46,10 +46,10 @@
                     },
                 }"
                 >
-                <img :src="result.imgUrl">
+                <img src="@//assets//nurifenForChild.jpg">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
-                    <p>{{result.price}}</p>
+                    <p>Price ${{result.price}}</p>
                 </div>
                 </router-link>
             </article>
@@ -107,6 +107,8 @@
 
 <script scoped>
 import MedicineTitle from "@/components/MedicineTitle";
+import axios from "axios";
+import qs from "qs";
 
 export default {
   name: "medicinesResultCat",
@@ -139,6 +141,19 @@ export default {
       deleteItem(index) {
         this.$delete(this.cartNumber, index);
       },
+      submitMedicineOrder() {
+
+        axios({
+        method: "post",
+        url: "http://deco.logfox.xyz/servlet_project/searchAddressServlet",
+
+        data: qs.stringify(null),
+      }).then((e) => {
+          this.$store.state.customerAddress = e;
+          console.log(this.$store.state.customerAddress);
+          this.$router.push({ path: "/checkoutMedicine" });
+      });
+    },
   },
 }
 </script>

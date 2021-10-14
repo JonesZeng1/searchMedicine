@@ -42,6 +42,14 @@ const routes = [
         /* webpackChunkName: "medicinesDetail" */ "../components/searchMedicine/medicinesDetail"
       ),
   },
+  {
+    path: "/checkoutMedicine",
+    name: "checkoutMedicine",
+    component: () =>
+      import(
+        /* webpackChunkName: "medicinesDetail" */ "../components/searchMedicine/checkoutMedicine"
+      ),
+  },
 ];
 
 const router = new VueRouter({

@@ -11,6 +11,7 @@ export default new Vuex.Store({
     medicinesRespones: "",
     selectedMedicine: [],
     cart:[],
+    customerAddress: "",
   },
   mutations: {},
   actions: {},

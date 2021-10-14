@@ -4,10 +4,10 @@
             <h2>Drugs detail</h2>
         </div>
         <div class="drugs_detail_img">
-            <!-- <img 
-            src= "../assets/logo.jpg"
+            <img 
+            src= "@/assets/nurifenForChild.jpg"
             alt="Image of the medicine."
-            > -->
+            >
         </div>
         <article class="drugs_shopping_detail">
             <div class="add_to_cart">
@@ -63,7 +63,7 @@ export default {
       addToCart() {
           if(this.value != 0) { 
             var temp = this.medicinesDetail;
-            (temp['selectedNumber'] = this.value);
+            (temp['quantity'] = this.value);
 
             this.$store.state.cart.push(temp);
           } else {
