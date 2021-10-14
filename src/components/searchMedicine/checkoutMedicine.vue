@@ -28,7 +28,7 @@
             
         </div>
 
-        <van-submit-bar :price="3050" button-text="Submit Order" @submit="onSubmit" />
+        <van-submit-bar :price="3050" button-text="Submit Order" @click="submitForm" />
     </div>
 </template>
 
@@ -47,6 +47,11 @@ export default {
         tel: '13000000000',
       },
     };
+  },
+  methods: {
+      submitForm() {
+          this.$router.push({ path: "/checkoutCompleted" });
+      }
   },
 }
 </script>

@@ -47,7 +47,15 @@ const routes = [
     name: "checkoutMedicine",
     component: () =>
       import(
-        /* webpackChunkName: "medicinesDetail" */ "../components/searchMedicine/checkoutMedicine"
+        /* webpackChunkName: "checkoutMedicine" */ "../components/searchMedicine/checkoutMedicine"
+      ),
+  },
+  {
+    path: "/checkoutCompleted",
+    name: "checkoutCompleted",
+    component: () =>
+      import(
+        /* webpackChunkName: "checkoutCompleted" */ "../components/searchMedicine/checkoutCompleted"
       ),
   },
 ];
