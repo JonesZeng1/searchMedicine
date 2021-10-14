@@ -28,7 +28,8 @@
             
         </div>
 
-        <van-submit-bar :price="3050" button-text="Submit Order" @click="submitForm" />
+        <van-submit-bar :price="3050" button-text="Submit Order" currency=$ @submit="submit" />
+        <button type="submit" @click="submitForm"></button>
     </div>
 </template>
 
@@ -49,6 +50,9 @@ export default {
     };
   },
   methods: {
+      submit() {
+          this.submitForm();
+      },
       submitForm() {
           this.$router.push({ path: "/checkoutCompleted" });
       }
