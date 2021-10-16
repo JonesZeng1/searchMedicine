@@ -136,7 +136,7 @@ export default {
 
       showPopup() {
         this.show = true;
-        console.log(this.cartNumber)
+
       },
       deleteItem(index) {
         this.$delete(this.cartNumber, index);
@@ -150,7 +150,24 @@ export default {
         data: qs.stringify(null),
       }).then((e) => {
           this.$store.state.customerAddress = e;
-          console.log(this.$store.state.customerAddress);
+          this.$store.state.cart = this.cartNumber;
+
+          var total = this.cartNumber;
+          var arrayLength = total.length;
+          var templist = [];
+          var finalPrice = 0;
+          var temp = "";
+
+            for (var i = 0; i < arrayLength; i++) {
+                temp = total[i].price*total[i].quantity;
+                templist.push(temp);
+        }
+            for (var j = 0; j < templist.length; j++) {
+                finalPrice += templist[j];
+        }
+
+        this.$store.state.totalPrice = finalPrice*100;
+
           this.$router.push({ path: "/checkoutMedicine" });
       });
     },

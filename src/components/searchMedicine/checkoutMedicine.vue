@@ -2,39 +2,30 @@
     <div>
         <MedicineTitle titleText="Checkout"></MedicineTitle>
 
-
-        <van-contact-card
-        type="edit"
-        name="John Snow"
-        tel="13000000000"
-        :editable="false"
-        />
-
-        <div class="order-detail">
-            <van-card
-            num="2"
-            price="2.00"
-            title="Title"
-            desc="Description"
-            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-            />
-            <van-card
-            num="2"
-            price="2.00"
-            title="Title"
-            desc="Description"
-            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-            />
-            
+        <div v-for="(result, index) in address" :key="index">
+            <h6>Shipping Address</h6>
+            <p>{{ result.shippingAddress }}</p>
         </div>
 
-        <van-submit-bar :price="3050" button-text="Submit Order" currency=$ @submit="submit" />
-        <button type="submit" @click="submitForm"></button>
+        <div class="order-detail">
+            <van-card v-for="(result, index) in cart" :key="index"
+            :num="result.quantity"
+            :price="result.price"
+            :desc="result.medicineDescription"
+            :title="result.medicineName"
+            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
+            />   
+        </div>
+
+        <van-submit-bar :price="this.price" button-text="Submit Order" currency=$ @submit="submit" />
+        <button class="trigger" type="submit" @click="submitForm"></button>
     </div>
 </template>
 
 <script>
 import MedicineTitle from "@/components/MedicineTitle";
+import axios from "axios";
+import qs from "qs";
 
 export default {
     name: "checkoutMedicine",
@@ -43,19 +34,50 @@ export default {
   },
   data() {
     return {
-      currentContact: {
-        name: 'John Snow',
-        tel: '13000000000',
-      },
+        cart:{},
+        price: "",
+        address: {},
+        productSubmit: [],
     };
   },
   methods: {
-      submit() {
+    submit() {
           this.submitForm();
-      },
-      submitForm() {
-          this.$router.push({ path: "/checkoutCompleted" });
-      }
+    },
+    submitForm() {
+        this.submitMedicineOrder();
+        
+    },
+    submitMedicineOrder() {
+
+        var list = this.cart;
+        var tempStore = {};
+        var templist = [];
+        for (var i = 0; i < list.length; i++) {
+            tempStore.medicineName = list[i].medicineName;
+            tempStore.quantity = list[i].quantity;
+            templist.push(tempStore);
+            tempStore = {};
+        }
+
+        let submitOrderForm = JSON.stringify({subtotal: this.price/100, shippingAddress: this.address[0].shippingAddress, medicines:templist});
+
+        axios({
+        method: "post",
+        url: "http://deco.logfox.xyz/servlet_project/createMedicineOrderServlet",
+
+        data: qs.stringify(submitOrderForm),
+      })
+        this.$router.push({ path: "/checkoutCompleted" });
+    },
+  },
+  created: function() {
+          this.cart = this.$store.state.cart;
+          this.price = this.$store.state.totalPrice;
+
+          this.address = this.$store.state.customerAddress.data.find((item) => {
+              return item.defaultAddress === true;
+          });
   },
 }
 </script>
@@ -64,5 +86,9 @@ export default {
 
 .order-detail {
     overflow: scroll;
+}
+
+.trigger {
+    display: none;
 }
 </style>

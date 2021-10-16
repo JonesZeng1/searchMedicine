@@ -12,6 +12,7 @@ export default new Vuex.Store({
     selectedMedicine: [],
     cart:[],
     customerAddress: "",
+    totalPrice: "",
   },
   mutations: {},
   actions: {},
