@@ -151,7 +151,7 @@ export default {
 
         axios({
         method: "post",
-        url: "http://deco.logfox.xyz/servlet_project/testAddressServlet",
+        url: "http://deco.logfox.xyz/servlet_project/searchAddressServlet",
 
         data: qs.stringify(1),
       }).then((e) => {
