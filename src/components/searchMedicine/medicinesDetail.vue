@@ -4,10 +4,7 @@
             <h2>Drugs detail</h2>
         </div>
         <div class="drugs_detail_img">
-            <img 
-            src= "@/assets/nurifenForChild.jpg"
-            alt="Image of the medicine."
-            >
+            <img :src="medicinesDetail.imgUrl">
         </div>
         <article class="drugs_shopping_detail">
             <div class="add_to_cart">

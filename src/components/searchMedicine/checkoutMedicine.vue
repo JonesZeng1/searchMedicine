@@ -1,20 +1,27 @@
 <template>
-    <div>
+    <div class="page-container">
         <MedicineTitle titleText="Checkout"></MedicineTitle>
 
-        <div v-for="(result, index) in address" :key="index">
-            <h6>Shipping Address</h6>
-            <p>{{ result.shippingAddress }}</p>
-        </div>
+        <div>
+            <div class="shipping-address">
+                <div class="location">
+                    <i class="fas fa-map-marker-alt" id="location-icon"></i>
+                </div>
+                <div class="address-detail">
+                    <h3>Shipping Address:</h3>
+                    {{ address.shippingAddress }}
+                </div>
+            </div>
 
-        <div class="order-detail">
-            <van-card v-for="(result, index) in cart" :key="index"
-            :num="result.quantity"
-            :price="result.price"
-            :desc="result.medicineDescription"
-            :title="result.medicineName"
-            thumb="https://img01.yzcdn.cn/vant/ipad.jpeg"
-            />   
+            <div class="order-detail">
+                <van-card v-for="(result, index) in cart" :key="index"
+                :num="result.quantity"
+                :price="result.price"
+                :desc="result.medicineDescription"
+                :title="result.medicineName"
+                :thumb="result.imgUrl"
+                />   
+            </div>
         </div>
 
         <van-submit-bar :price="this.price" button-text="Submit Order" currency=$ @submit="submit" />
@@ -60,7 +67,7 @@ export default {
             tempStore = {};
         }
 
-        let submitOrderForm = JSON.stringify({subtotal: this.price/100, shippingAddress: this.address[0].shippingAddress, medicines:templist});
+        let submitOrderForm = JSON.stringify({subtotal: this.price/100, shippingAddress: this.address.shippingAddress, medicines:templist});
 
         axios({
         method: "post",
@@ -68,6 +75,7 @@ export default {
 
         data: qs.stringify(submitOrderForm),
       })
+        console.log(submitOrderForm);
         this.$router.push({ path: "/checkoutCompleted" });
     },
   },
@@ -83,6 +91,36 @@ export default {
 </script>
 
 <style scoped>
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.page-container {
+    width: 100vw;
+    height: 100vh;
+}
+
+.shipping-address {
+    padding: 1em;
+    border-radius: 12%;
+    display: flex;
+}
+
+.location {
+    width: 20%;
+}
+
+#location-icon {
+    font-size: 2em;
+    margin-top: 15px;
+}
+
+.address-detail {
+    width: 80%;
+    text-align: left;
+}
 
 .order-detail {
     overflow: scroll;

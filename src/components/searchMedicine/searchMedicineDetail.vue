@@ -7,10 +7,17 @@
                 <van-search v-model="inputValue" placeholder="Please input the keyword" />
             
             <div class="medicines_price_range">
-                <h2>Prices</h2>
+                <h2>Prices: ${{ value[0] }} - ${{ value[1] }}</h2>
                     <form>
-                        <van-slider class="slider" v-model="value" :min="5" :max="100" range @change="onChange" />
-
+                        <van-slider class="slider" v-model="value" :min="5" :max="100" range />
+                        <div class="price-indicator">
+                          <div class="min-price">
+                            <h4>$5</h4>
+                          </div>
+                          <div class="max-price">
+                            <h4>$100</h4>
+                          </div>
+                        </div>
                         <div class="search_medicine_button">                            
                             <div @click="checksubmit" id="search_medicine_button">Search</div>
                         </div>
@@ -39,9 +46,6 @@ export default {
     };
   },
   methods: {
-    onChange(value) {
-      Toast('Current value range：' + value);
-    },
     checksubmit() {
         if (!this.$data.inputValue) {
         Toast("Please input medicine keyword");
@@ -126,6 +130,21 @@ body {
 
 .slider {
     width: 100%;
+}
+
+.price-indicator {
+  padding: 1em;
+  display: flex;
+}
+
+.min-price {
+  text-align: left;
+  width: 50%;
+}
+
+.max-price {
+  text-align: right;
+  width: 50%;
 }
 
 .search_medicine_button {

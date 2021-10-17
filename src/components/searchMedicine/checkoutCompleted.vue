@@ -14,7 +14,7 @@
             <div id="check-button">Go to check</div>
         </div>
         <div class="later-button">
-            <div id="later-button">Later</div>
+            <div @click="backToHome" id="later-button">Later</div>
         </div>
     </div>
  
@@ -24,6 +24,11 @@
 <script>
 export default {
     name: "checkoutCompleted",
+    methods: {
+        backToHome() {
+            window.location.href = 'http://deco.logfox.xyz/servlet_project/jumperServlet?target=home.html';
+        }
+    },
 }
 </script>
 

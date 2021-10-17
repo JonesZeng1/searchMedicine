@@ -12,20 +12,26 @@
         <div class="symtoms_name">
             <h3>Cold</h3>
             <van-icon @click="showPopup" class="cart" name="cart-o" color="#1989fa" size="35" :badge= "cartNumber.length" />
-                <van-popup v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '80%' }">
-                    <van-swipe-cell v-for="(result, index) in cartNumber" :key="index">
+                <van-popup class="popup" v-model="show" get-container="getContainer" round position="bottom" :style="{ height: '80%' }">
+                    <h2>Shopping Cart</h2>
+
+                    <div class="items">
+                        <van-swipe-cell v-for="(result, index) in cartNumber" :key="index">
+
                         <van-card 
                             :num="result.quantity"
                             :price="result.price"
                             :desc="result.medicineDescription"
                             :title="result.medicineName"
                             class="goods-card"
-                            thumb="@/assets/nurifenForChild.jpg"
+                            :thumb="result.imgUrl"
                         />
+
                         <template #right>
                             <van-button square text="Delete" type="danger" class="delete-button" @click="deleteItem(index)" />
                         </template>
                     </van-swipe-cell>
+                    </div>
 
                     <div class="confirm-buttom">
                         <div @click="submitMedicineOrder" class="confirm">
@@ -46,7 +52,7 @@
                     },
                 }"
                 >
-                <img src="@//assets//nurifenForChild.jpg">
+                <img :src="result.imgUrl">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
                     <p>Price ${{result.price}}</p>
@@ -65,7 +71,7 @@
             </div>
 
             <div class="related_medicines_title">
-                <p>Fever</p>
+                <p>General</p>
                 <a href="">More</a>
             </div>
 
@@ -145,9 +151,9 @@ export default {
 
         axios({
         method: "post",
-        url: "http://deco.logfox.xyz/servlet_project/searchAddressServlet",
+        url: "http://deco.logfox.xyz/servlet_project/testAddressServlet",
 
-        data: qs.stringify(null),
+        data: qs.stringify(1),
       }).then((e) => {
           this.$store.state.customerAddress = e;
           this.$store.state.cart = this.cartNumber;
@@ -168,7 +174,7 @@ export default {
 
         this.$store.state.totalPrice = finalPrice*100;
 
-          this.$router.push({ path: "/checkoutMedicine" });
+        this.$router.push({ path: "/checkoutMedicine" });
       });
     },
   },
@@ -326,14 +332,23 @@ body {
 
 /* popup windows */
 
+.popup h2 {
+    padding: 1em;
+}
+
 .goods-card {
     margin: 0;
     background-color: white;
   }
 
-  .delete-button {
+.delete-button {
     height: 100%;
-  }
+}
+
+.items {
+    overflow: scroll;
+    height: 23em;
+}
 
 .confirm-buttom {
     margin-top: 5em;
