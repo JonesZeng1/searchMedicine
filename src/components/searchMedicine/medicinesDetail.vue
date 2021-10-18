@@ -52,21 +52,17 @@ export default {
   },
   created() {
 
-      this.medicinesDetail = this.$store.state.selectedMedicine.find((item) => {
-        return item.medicineId === this.$route.query.medicineId;
+    if (this.$store.state.selected === 0) {
+        this.medicinesDetail = this.$store.state.selectedMedicine.find((item) => {
+        return item.medicineId == this.$route.query.medicineId;
+        
     });
-
-    // if (this.$store.state.selected === 0) {
-    //     this.medicinesDetail = this.$store.state.selectedMedicine.find((item) => {
-    //     return item.medicineId === this.$route.query.medicineId;
-    // });
-    // } else {
-    //     this.medicinesDetail = this.$store.state.selectedRandom.find((item) => {
-    //     return item.medicineId === this.$route.query.medicineId;
-    // });
-    // }
+    } else {
+        this.medicinesDetail = this.$store.state.selectedRandom.find((item) => {
+        return item.medicineId == this.$route.query.medicineId;
+    });
+    }
     
-    // console.log(this.medicinesDetail);
   },
   methods: {
       addToCart() {

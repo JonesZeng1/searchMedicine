@@ -43,21 +43,12 @@
         </div>
         
         <div class="medicines">
-            <article @click="selectedMedicine" class="medicine_card" v-for="(result, index) in medicinesResults" :key="index">
-                <router-link
-                :to="{
-                    name: 'medicinesDetail',
-                    query: {
-                    medicineId: result.medicineId,
-                    },
-                }"
-                >
+            <article @click="selectedMedicine(result.medicineId)" class="medicine_card" v-for="(result, index) in medicinesResults" :key="index">
                 <img :src="result.imgUrl">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
                     <p>Price ${{result.price}}</p>
                 </div>
-                </router-link>
             </article>
         </div>
 
@@ -76,21 +67,12 @@
             </div>
 
             <div class="medicines">
-            <article @click="selectedRandomMedicine()" class="medicine_card" v-for="(result, index) in randomMedicineResult" :key="index">
-                <!-- <router-link
-                :to="{
-                    name: 'medicinesDetail',
-                    query: {
-                    medicineId: result.medicineId,
-                    },
-                }"
-                > -->
+            <article @click="selectedRandomMedicine(result.medicineId)" class="medicine_card" v-for="(result, index) in randomMedicineResult" :key="index">
                 <img :src="result.imgUrl">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
                     <p>Price ${{result.price}}</p>
                 </div>
-                <!-- </router-link> -->
             </article>
         </div>
         </div>
@@ -127,12 +109,14 @@ export default {
   },
 
   methods: {
-      selectedMedicine() {
+      selectedMedicine(id) {
         this.$store.state.selected = 0;
+        this.$router.push({ path: '/medicinesDetail', query: { medicineId: id} })
       },
 
-      selectedRandomMedicine() {
+      selectedRandomMedicine(id) {
         this.$store.state.selected = 1;
+        this.$router.push({ path: '/medicinesDetail', query: { medicineId: id} })
       },
 
       showPopup() {
