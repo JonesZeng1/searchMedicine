@@ -14,6 +14,8 @@ export default new Vuex.Store({
     customerAddress: "",
     totalPrice: "",
     randomMedicine:"",
+    selectedRandom:[],
+    setected: "",
   },
   mutations: {},
   actions: {},

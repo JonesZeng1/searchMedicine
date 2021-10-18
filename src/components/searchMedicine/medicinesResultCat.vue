@@ -72,25 +72,25 @@
 
             <div class="related_medicines_title">
                 <p>General</p>
-                <a href="">More</a>
+                <a>More</a>
             </div>
 
             <div class="medicines">
-            <article @click="selectedMedicine" class="medicine_card" v-for="(result, index) in randomMedicineResult" :key="index">
-                <router-link
+            <article @click="selectedRandomMedicine()" class="medicine_card" v-for="(result, index) in randomMedicineResult" :key="index">
+                <!-- <router-link
                 :to="{
                     name: 'medicinesDetail',
                     query: {
                     medicineId: result.medicineId,
                     },
                 }"
-                >
+                > -->
                 <img :src="result.imgUrl">
                 <div class="medicine">
                     <p>{{result.medicineName}}</p>
                     <p>Price ${{result.price}}</p>
                 </div>
-                </router-link>
+                <!-- </router-link> -->
             </article>
         </div>
         </div>
@@ -122,11 +122,17 @@ export default {
         this.medicinesResults = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
         this.randomMedicineResult = this.$store.state.randomMedicine.data;
         this.cartNumber = this.$store.state.cart;
+        this.$store.state.selectedRandom = this.$store.state.randomMedicine.data;
+        this.$store.state.selectedMedicine = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
   },
 
   methods: {
       selectedMedicine() {
-        this.$store.state.selectedMedicine = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
+        this.$store.state.selected = 0;
+      },
+
+      selectedRandomMedicine() {
+        this.$store.state.selected = 1;
       },
 
       showPopup() {
