@@ -13,6 +13,7 @@ export default new Vuex.Store({
     cart:[],
     customerAddress: "",
     totalPrice: "",
+    randomMedicine:"",
   },
   mutations: {},
   actions: {},

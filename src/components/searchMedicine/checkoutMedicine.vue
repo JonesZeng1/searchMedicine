@@ -32,7 +32,6 @@
 <script>
 import MedicineTitle from "@/components/MedicineTitle";
 import axios from "axios";
-import qs from "qs";
 
 export default {
     name: "checkoutMedicine",
@@ -73,7 +72,7 @@ export default {
         method: "post",
         url: "http://deco.logfox.xyz/servlet_project/createMedicineOrderServlet",
 
-        data: qs.stringify(submitOrderForm),
+        data: submitOrderForm,
       })
         console.log(submitOrderForm);
         this.$router.push({ path: "/checkoutCompleted" });

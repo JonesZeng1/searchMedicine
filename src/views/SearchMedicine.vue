@@ -5,19 +5,16 @@
 
             <section class="symptoms_and_common_medicine">
                 <article>
-                    <a href="">
-                        <div class="symptoms">
-                            <div class="symptoms_description">
-                                <h3>By symptoms</h3>
-                                <p>..., etc.</p>
-                            </div>
-                            <div class="go_arrow">
-                                <router-link to="/searchMedicineDetail"><i class="fas fa-arrow-right"></i></router-link>
-                            </div>
+                    <div class="symptoms">
+                        <div class="symptoms_description">
+                            <h3>By symptoms</h3>
+                            <p>..., etc.</p>
                         </div>
-                        </a>
+                        <div class="go_arrow" @click="getRandomMedicine">
+                            <i class="fas fa-arrow-right"></i>
+                        </div>
+                    </div>
 
-                    <a href="">
                     <div class="medicine">
                         <div class="medicines">
                             <h3>Commonly used medicine</h3>
@@ -27,7 +24,6 @@
                             <i class="fas fa-arrow-right"></i>
                         </div>
                     </div>
-                    </a>
                 </article>
             </section>
       </div>
@@ -36,6 +32,8 @@
 
 <script>
 import MedicineTitle from "@/components/MedicineTitle";
+import axios from "axios";
+import qs from "qs";
 
 export default {
     name: "SearchMedicine",
@@ -43,9 +41,18 @@ export default {
         MedicineTitle,
     },
     methods: {
-        bySymptoms() {
-            this.$router.push({ path: "searchMedicineDetail" });
-        }
+        getRandomMedicine() {
+
+        axios({
+        method: "post",
+        url: "http://deco.logfox.xyz/servlet_project/getRandMedicineServlet",
+
+        data: qs.stringify(1),
+      }).then((e) => {
+          this.$store.state.randomMedicine = e;
+          this.$router.push({ path: "searchMedicineDetail" });
+      });
+    },
     }
 }
 </script>

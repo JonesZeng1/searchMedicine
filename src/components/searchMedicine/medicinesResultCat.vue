@@ -76,36 +76,23 @@
             </div>
 
             <div class="medicines">
-                <article class="medicine_card">
-                    <img src="">
-                    <p id="medicine_name">Panadol</p>
-                    <p>$price</p>
-                </article>
-    
-                <article class="medicine_card">
-                    <img src="">
-                    <p id="medicine_name">Panadol</p>
-                    <p>$price</p>
-                </article>
-    
-                <article class="medicine_card">
-                    <img src="">
-                    <p id="medicine_name">Panadol</p>
-                    <p>$price</p>
-                </article>
-    
-                <article class="medicine_card">
-                    <img src="">
-                    <p id="medicine_name">Panadol</p>
-                    <p>$price</p>
-                </article>
-
-                <article class="medicine_card">
-                    <img src="">
-                    <p id="medicine_name">Panadol</p>
-                    <p>$price</p>
-                </article>
-            </div>
+            <article @click="selectedMedicine" class="medicine_card" v-for="(result, index) in randomMedicineResult" :key="index">
+                <router-link
+                :to="{
+                    name: 'medicinesDetail',
+                    query: {
+                    medicineId: result.medicineId,
+                    },
+                }"
+                >
+                <img :src="result.imgUrl">
+                <div class="medicine">
+                    <p>{{result.medicineName}}</p>
+                    <p>Price ${{result.price}}</p>
+                </div>
+                </router-link>
+            </article>
+        </div>
         </div>
     </section>
   </div>
@@ -125,6 +112,7 @@ export default {
   data() {
       return {
           medicinesResults:[],
+          randomMedicineResult:[],
           cartNumber: [],
           show: false,
       };
@@ -132,6 +120,7 @@ export default {
 
   created: function () {
         this.medicinesResults = this.$store.getters.getMedicinesRespones.medicinesRespones.data;
+        this.randomMedicineResult = this.$store.state.randomMedicine.data;
         this.cartNumber = this.$store.state.cart;
   },
 
